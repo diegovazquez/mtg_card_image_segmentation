@@ -85,8 +85,8 @@ python 02_dowload_hdrs.py
 cd ..
 blenderproc run dataset_generator/03_generate_synthetic_dataset.py
 
-# For large datasets, use synthetic_dataset_anti_leak.py (restar the process every X minutes)
-python synthetic_dataset_anti_leak.py -t 30
+# For large datasets, use synthetic_dataset_anti_leak.py (restar the 03_generate_synthetic_dataset script every X minutes)
+python synthetic_dataset_anti_leak.py -t 5
 
 # blenderproc recomend not redering too many imgs in a single bender instance. I read this after the implementation...
 # So... i make a dirty hack (it works!) 
@@ -96,8 +96,6 @@ Note: In Windows, if blenderproc is not in your path, you can try (examples):
 
     python -m blenderproc pip install tqdm>=4.66.0
     python -m blenderproc run dataset_generator/03_generate_synthetic_dataset.py
-
-    python -m blenderproc run dataset_generator/03_generate_synthetic_dataset_reset.py
 
 # Developer Notes
 
