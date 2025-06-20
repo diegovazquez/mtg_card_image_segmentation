@@ -1,0 +1,47 @@
+import bpy
+import bmesh
+
+card_width = 0.063
+card_height = 0.088
+card_thickness = 0.0003
+corner_radius = 0.002
+
+mesh = bpy.data.meshes.new("MTGCard")
+obj = bpy.data.objects.new("MTGCard", mesh)
+bpy.context.collection.objects.link(obj)
+        
+# Create bmesh instance
+bm = bmesh.new()
+        
+# Create rectangle
+bmesh.ops.create_cube(bm, size=1)
+    
+# Scale to card dimensions
+bmesh.ops.scale(bm,
+    vec=(card_width/2, card_height/2, card_thickness/2),
+    verts=bm.verts)    
+
+# Create rounded corners
+depth_edges = []
+for edge in bm.edges:
+    # Get the edge's direction vector
+    edge_vec = edge.verts[1].co - edge.verts[0].co
+    edge_vec.normalize()
+    
+    # Edge is considered a depth edge if it is mostly vertical
+    if abs(edge_vec.z) > 0.9:  # Edge is mostly vertical (along thickness)
+        depth_edges.append(edge)
+
+
+# Bevel all edges to round the corners
+# https://docs.blender.org/api/current/bmesh.ops.html
+bmesh.ops.bevel(bm,
+              geom=depth_edges,
+              affect='EDGES',
+              offset=corner_radius,
+              offset_type='OFFSET',
+              segments=32,
+              profile=0.5)
+
+bm.to_mesh(mesh)
+bm.free()

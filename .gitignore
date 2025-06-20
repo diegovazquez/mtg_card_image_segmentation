@@ -1,0 +1,9 @@
+__pycache__
+dataset
+dataset_generator/__pycache__
+dataset_generator/hdri
+dataset_generator/references
+old
+venv
+venv_ml
+NOTAS.md
