@@ -36,15 +36,15 @@ Others: [WIP] Expand the dataset with a generative network like flux or Stable d
 - Nvida Cuda 12 and a working pytorch enviroment (google it)
 - Ubuntu 24.04 is recomended
 
-## Step 1 - MTG Cards Syntetic Dataset Generator
+## Step 1 - MTG Cards Syntetic Dataset Generator (`dataset_generator/`)
 
-### 1. Reference Dataset Downloader (`dataset_generator/01_download_references.py`)
+### 1. Reference Dataset Downloader (`01_download_references.py`)
 Downloads MTG card reference images from Scryfall API.
 
-### 2. Reference Dataset Downloader (`dataset_generator/02_dowload_hdrs.py`)
+### 2. Reference Dataset Downloader (`02_dowload_hdrs.py`)
 Downloads realistic environments and lightings (HDRI) from Polyhaven API.
 
-### 3. Synthetic Image Generator (`dataset_generator/03_generate_synthetic_dataset.py`)
+### 3. Synthetic Image Generator (`03_generate_synthetic_dataset.py`)
 BlenderProc2-based synthetic image generator that creates realistic MTG card images with segmentation masks.
 
 #### Features:
@@ -56,7 +56,7 @@ BlenderProc2-based synthetic image generator that creates realistic MTG card ima
 
 #### Examples:
 ![example 1 mask](docs/example_1.png)
-![example 1 mask](docs/example_1_mask.png)
+![example 1 mask](docs/example_1_mask.png)  
 ![example 2 mask](docs/example_2.png) 
 ![example 2 mask](docs/example_2_mask.png)
 
@@ -110,6 +110,6 @@ This tools where created using:
     Gemini 2.5 pro - IA Model
     Python / Python Debugger / Pylance - VSCode extensions
 
-See [Synthetic Image Generator](dataset_generator/generate_synthetic.md) documentation.
-Original repo [link](https://github.com/diegovazquez/mtg_image_segmentation).
-Pre Generated Dataset [link](https://huggingface.co/datasets/dhvazquez/mtg_synthetic_cards_semantic_segmentation/)
+See [Synthetic Image Generator](dataset_generator/generate_synthetic.md) documentation.  
+Original repo [link](https://github.com/diegovazquez/mtg_image_segmentation).  
+Pre Generated Dataset [link](https://huggingface.co/datasets/dhvazquez/mtg_synthetic_cards_semantic_segmentation/).  
