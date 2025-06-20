@@ -109,5 +109,5 @@ This tools where created using:
     Python / Python Debugger / Pylance - VSCode extensions
 
 See [Synthetic Image Generator](dataset_generator/generate_synthetic.md) documentation.  
-Original repo [link](https://github.com/diegovazquez/mtg_image_segmentation).  
+Original repo [link](https://github.com/diegovazquez/mtg_card_image_segmentation).  
 Pre Generated Dataset [link](https://huggingface.co/datasets/dhvazquez/mtg_synthetic_cards_semantic_segmentation/).  
