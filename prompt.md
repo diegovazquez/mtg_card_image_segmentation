@@ -45,7 +45,8 @@ Crear una aplicacion compatible con Huggingface Spaces
 - Si la imagen de entrada al modelo es 640x480, rotar la imagen 90 grados a contrarreloj para llevarlo a 480x640
 - La app se guarda en /demo
 
-
-La demo en demo/ da el siguiente errror en el navegador
+'''
+La demo en demo/ da el siguiente error en el navegador
 
 Mejorar la demo en demo/ para que ONNX Runtime web utilice la GPU si esta disponible.
+'''

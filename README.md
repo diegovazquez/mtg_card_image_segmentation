@@ -35,10 +35,12 @@ Others:
 - 16 gb of ram or more (recomended)
 - 10 GB of hard disk space (or more)
 - A cuda 12 capable GPU (Nvidia) (others may be can be used, not tested)
-- Nvida Cuda 12 and a working pytorch enviroment (google it)
+- A working pytorch enviroment (google it)
 - Ubuntu 24.04 is recomended
 
 ## Step 1 - MTG Cards Syntetic Dataset Generator (`dataset_generator/`)
+
+**NOTE:** You cand download pregenerated dataset from this [link](https://huggingface.co/datasets/dhvazquez/mtg_synthetic_cards_semantic_segmentation/).
 
 ### 1. Reference Dataset Downloader (`01_download_references.py`)
 Downloads MTG card reference images from Scryfall API.
@@ -99,6 +101,28 @@ Note: In Windows, if blenderproc is not in your path, you can try (examples):
     python -m blenderproc pip install tqdm>=4.66.0
     python -m blenderproc run dataset_generator/03_generate_synthetic_dataset.py
 
+## Step 2 - Train  (`train/`)
+
+Please read this documentation [link](train/README.md).
+
+
+## Step 3 - Demo  (`demo/`)
+
+#### Quick Start:
+
+```bash
+pip install fastapi uvicorn
+python demo.py
+INFO:     Started server process [5926]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:5000 (Press CTRL+C to quit)
+```
+
+Go to http://127.0.0.1:5000/ in you browser.
+
+Note: You need the exported model in train/exported_models/card_segmentation.onnx
+
 # Developer Notes
 
 This tools where created using: 
@@ -112,4 +136,5 @@ This tools where created using:
 
 See [Synthetic Image Generator](dataset_generator/generate_synthetic.md) documentation.  
 Original repo [link](https://github.com/diegovazquez/mtg_card_image_segmentation).  
-Pre Generated Dataset [link](https://huggingface.co/datasets/dhvazquez/mtg_synthetic_cards_semantic_segmentation/).  
+
+Sorry for my english, im still learning.
