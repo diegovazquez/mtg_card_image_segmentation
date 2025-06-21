@@ -2,7 +2,7 @@
 
 This document is a personal reference.
 
-## 01 - Download references -----------------------------------------------
+## 01 - Download references
 
 Utilizar la api publica de scryfall para bajar imagenes de referencias de las cartas de MTG. Poner una pausa de 100 milisegundos entre solicitudes.
 
@@ -51,7 +51,7 @@ Retorna
 
 El parametro next_page es la URL donde obtener la siguiente lista de cartas, "image_uris" -> "png" es donde obtener la URL de la imagen.
 
-## 02 - Download HDR -----------------------------------------------
+## 02 - Download HDR
 
 Teniendo en consideracion el OpenAPI https://api.polyhaven.com/api-docs/swagger.json 
 
@@ -64,7 +64,7 @@ Teniendo en consideracion el OpenAPI https://api.polyhaven.com/api-docs/swagger.
 - Generar el codigo en ingles.
 - Usar os.path.realpath() para garantizar la compatibilidad entre pataformas e interpretes.
 
-## 03 - Generate Synthetic single -----------------------------------------------
+## 03 - Generate Synthetic single
 
 '''
 Utilizar BlenderProc2 para generar imagenes una imagen sintetica de cartas Magic The Gatering.
@@ -120,7 +120,7 @@ python -m blenderproc run dataset_generator/generate_synthetic.py --input datase
 
 NOTA: La llm no se funciona bien para esto, se modifico bastante a mano.
 
-## 04 - Generate Synthetic -----------------------------------------------
+## 04 - Generate Synthetic
 
 Generar un script para generar un dataset de imagenes utilizando la clase MTGCardSynthetic.
 
@@ -134,7 +134,7 @@ Generar un script para generar un dataset de imagenes utilizando la clase MTGCar
 - Generar el codigo en ingles 
 - La primera linea del script tiene que ser: import blenderproc as bproc
 
-## 04 - synthetic_dataset_anti_leak -----------------------------------------------
+## 04 - synthetic_dataset_anti_leak
 
 
 Generar un script que ejecute el siguiente comando en linux

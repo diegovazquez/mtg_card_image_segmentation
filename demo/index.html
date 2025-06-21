@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Card Segmentation - Real-time Detection</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎴 Card Segmentation</h1>
+            <p>Real-time card detection using semantic segmentation</p>
+        </header>
+
+        <main>
+            <!-- Camera Selection -->
+            <div class="camera-selection" id="cameraSelection">
+                <h2>Select Camera</h2>
+                <select id="cameraSelect" class="camera-dropdown">
+                    <option value="">Loading cameras...</option>
+                </select>
+                <button id="startCamera" class="btn btn-primary" disabled>Start Camera</button>
+            </div>
+
+            <!-- Video Display -->
+            <div class="video-container" id="videoContainer" style="display: none;">
+                <div class="video-wrapper">
+                    <video id="videoElement" autoplay muted playsinline></video>
+                    <canvas id="overlayCanvas"></canvas>
+                </div>
+                
+                <div class="controls">
+                    <button id="toggleInference" class="btn btn-success">Start Detection</button>
+                    <button id="switchCamera" class="btn btn-secondary">Switch Camera</button>
+                    <div class="info">
+                        <span id="resolutionInfo">Resolution: --</span>
+                        <span id="fpsInfo">FPS: --</span>
+                        <span id="inferenceStatus">Detection: Off</span>
+                        <span id="accelerationInfo">Acceleration: --</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loading Indicator -->
+            <div class="loading" id="loadingIndicator">
+                <div class="spinner"></div>
+                <p id="loadingText">Loading model...</p>
+            </div>
+
+            <!-- Error Display -->
+            <div class="error" id="errorDisplay" style="display: none;">
+                <h3>⚠️ Error</h3>
+                <p id="errorMessage"></p>
+                <button id="retryButton" class="btn btn-primary">Retry</button>
+            </div>
+        </main>
+
+        <footer>
+            <p>Powered by ONNX Runtime Web • Real-time inference in your browser</p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.16.3/dist/ort.min.js"></script>
+    <script src="image-utils.js"></script>
+    <script src="model-inference.js"></script>
+    <script src="camera-manager.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

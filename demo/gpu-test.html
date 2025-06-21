@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPU Acceleration Test - Card Segmentation</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .test-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        .test-result {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            font-family: monospace;
+        }
+        
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        
+        .btn:hover {
+            background: #5a6fd8;
+        }
+        
+        #loadingIndicator {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .spinner {
+            width: 30px;
+            height: 30px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🎴 GPU Acceleration Test</h1>
+        <p>This page tests GPU acceleration capabilities for the Card Segmentation demo.</p>
+        
+        <button class="btn" onclick="runTests()">Run GPU Tests</button>
+        <button class="btn" onclick="testModelLoading()">Test Model Loading</button>
+        
+        <div id="loadingIndicator">
+            <div class="spinner"></div>
+            <p>Testing GPU capabilities...</p>
+        </div>
+        
+        <div id="testResults"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/onnxruntime-web@1.16.3/dist/ort.min.js"></script>
+    <script>
+        let testResults = [];
+
+        function showLoading() {
+            document.getElementById('loadingIndicator').style.display = 'block';
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingIndicator').style.display = 'none';
+        }
+
+        function addResult(message, type = 'success') {
+            testResults.push({ message, type });
+            updateResults();
+        }
+
+        function updateResults() {
+            const container = document.getElementById('testResults');
+            container.innerHTML = testResults.map(result => 
+                `<div class="test-result ${result.type}">${result.message}</div>`
+            ).join('');
+        }
+
+        async function testWebGLSupport() {
+            try {
+                const canvas = document.createElement('canvas');
+                const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+                
+                if (!gl) {
+                    addResult('❌ WebGL: Not supported', 'error');
+                    return false;
+                }
+
+                const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+                const vendor = debugInfo ? gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL) : gl.getParameter(gl.VENDOR);
+                const renderer = debugInfo ? gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER);
+                
+                addResult(`✅ WebGL: Supported (${vendor} - ${renderer})`, 'success');
+                return true;
+            } catch (error) {
+                addResult(`❌ WebGL: Error - ${error.message}`, 'error');
+                return false;
+            }
+        }
+
+        async function testWebGPUSupport() {
+            try {
+                if (!navigator.gpu) {
+                    addResult('⚠️ WebGPU: Not available (navigator.gpu not found)', 'warning');
+                    return false;
+                }
+
+                const adapter = await navigator.gpu.requestAdapter();
+                if (!adapter) {
+                    addResult('⚠️ WebGPU: No adapter available', 'warning');
+                    return false;
+                }
+
+                const info = await adapter.requestAdapterInfo();
+                addResult(`✅ WebGPU: Supported (${info.vendor || 'Unknown'})`, 'success');
+                return true;
+            } catch (error) {
+                addResult(`⚠️ WebGPU: ${error.message}`, 'warning');
+                return false;
+            }
+        }
+
+        async function testONNXProviders() {
+            try {
+                // Configure ONNX Runtime
+                ort.env.wasm.wasmPaths = 'https://cdn.jsdelivr.net/npm/onnxruntime-web@1.16.3/dist/';
+                
+                const providers = [];
+                
+                // Test WebGPU provider
+                try {
+                    const session = await ort.InferenceSession.create(
+                        new Uint8Array([/* minimal ONNX model */]), 
+                        { executionProviders: ['webgpu'] }
+                    );
+                    providers.push('webgpu');
+                    session.release();
+                } catch (error) {
+                    addResult(`⚠️ ONNX WebGPU Provider: ${error.message}`, 'warning');
+                }
+
+                // Test WebGL provider
+                try {
+                    const session = await ort.InferenceSession.create(
+                        new Uint8Array([/* minimal ONNX model */]), 
+                        { executionProviders: ['webgl'] }
+                    );
+                    providers.push('webgl');
+                    session.release();
+                } catch (error) {
+                    addResult(`⚠️ ONNX WebGL Provider: ${error.message}`, 'warning');
+                }
+
+                // Test WASM provider (should always work)
+                try {
+                    const session = await ort.InferenceSession.create(
+                        new Uint8Array([/* minimal ONNX model */]), 
+                        { executionProviders: ['wasm'] }
+                    );
+                    providers.push('wasm');
+                    session.release();
+                    addResult('✅ ONNX WASM Provider: Available', 'success');
+                } catch (error) {
+                    addResult(`❌ ONNX WASM Provider: ${error.message}`, 'error');
+                }
+
+                if (providers.length > 1) {
+                    addResult(`✅ Available ONNX Providers: ${providers.join(', ')}`, 'success');
+                } else {
+                    addResult('⚠️ Limited ONNX Providers: Only WASM available', 'warning');
+                }
+
+            } catch (error) {
+                addResult(`❌ ONNX Provider Test Failed: ${error.message}`, 'error');
+            }
+        }
+
+        async function testModelLoading() {
+            showLoading();
+            testResults = [];
+            
+            try {
+                addResult('🔄 Testing model loading with different providers...', 'warning');
+                
+                ort.env.wasm.wasmPaths = 'https://cdn.jsdelivr.net/npm/onnxruntime-web@1.16.3/dist/';
+                
+                const modelPath = 'models/card_segmentation.onnx';
+                const providers = ['webgl', 'webgpu', 'wasm']; // Prioritize WebGL over WebGPU
+                
+                for (const provider of providers) {
+                    try {
+                        addResult(`🔄 Testing ${provider} provider...`, 'warning');
+                        
+                        const startTime = performance.now();
+                        const session = await ort.InferenceSession.create(modelPath, {
+                            executionProviders: [provider]
+                        });
+                        const loadTime = performance.now() - startTime;
+                        
+                        addResult(`✅ ${provider.toUpperCase()}: Model loaded successfully (${loadTime.toFixed(0)}ms)`, 'success');
+                        session.release();
+                        break;
+                    } catch (error) {
+                        addResult(`❌ ${provider.toUpperCase()}: ${error.message}`, 'error');
+                    }
+                }
+                
+            } catch (error) {
+                addResult(`❌ Model loading test failed: ${error.message}`, 'error');
+            }
+            
+            hideLoading();
+        }
+
+        async function runTests() {
+            showLoading();
+            testResults = [];
+            
+            addResult('🔄 Starting GPU acceleration tests...', 'warning');
+            
+            // Test browser capabilities
+            await testWebGLSupport();
+            await testWebGPUSupport();
+            
+            // Test ONNX Runtime providers
+            await testONNXProviders();
+            
+            addResult('✅ GPU capability tests completed!', 'success');
+            hideLoading();
+        }
+
+        // Auto-run basic tests on page load
+        window.addEventListener('load', () => {
+            setTimeout(runTests, 1000);
+        });
+    </script>
+</body>
+</html>

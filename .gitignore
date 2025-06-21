@@ -7,3 +7,6 @@ old
 venv
 venv_ml
 NOTAS.md
+train/checkpoints
+train/logs
+train/exported_models

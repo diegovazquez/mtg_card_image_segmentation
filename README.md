@@ -20,13 +20,15 @@ This project provides tools for generating Magic The Gathering Cards image segme
 
 - [x] Create MTG Cards Syntetic Dataset Generator based on 3d redering, and generate the first version of this dataset. 
 
-- [ ] Create the machine learning training scrips and train the model
+- [x] Create the machine learning training scrips and train the model
 
-- [ ] Transform to ONNX
+- [X] Transform to ONNX
 
-- [ ] Crate a web example for runing the model in web
+- [X] Crate a web example for runing the model in web
 
-Others: [WIP] Expand the dataset with a generative network like flux or Stable diffusion
+Others: 
+
+- [ ] Expand the dataset with a generative network like flux or Stable diffusion
 
 # Hardware/Software Requirements
 
