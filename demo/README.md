@@ -38,13 +38,13 @@ A real-time card segmentation application that uses semantic segmentation to det
 
 ### GPU Acceleration
 
-The demo automatically detects and uses the best available acceleration:
+The demo automatically detects and uses the best available acceleration in priority order:
 
-- **WebGPU**: Next-generation GPU acceleration (Chrome/Edge experimental)
-- **WebGL**: Widely supported GPU acceleration (2-5x performance boost when compatible)
-- **WebAssembly**: CPU fallback ensuring universal compatibility
+1. **WebGPU**: Next-generation GPU acceleration (primary choice for best performance)
+2. **WebGL**: Widely supported GPU acceleration (fallback with 2-5x performance boost when compatible)  
+3. **WebAssembly**: CPU fallback ensuring universal compatibility
 
-**Note on GPU Compatibility**: Some models may use operators not supported by GPU providers (like 'HardSigmoid' in WebGL). In such cases, the demo automatically falls back to CPU processing while clearly indicating the reason in the acceleration status.
+**Note on GPU Compatibility**: Some models may use operators not supported by GPU providers (like 'HardSigmoid' in WebGL). In such cases, the demo automatically falls back to the next available provider while clearly indicating the reason in the acceleration status.
 
 The active acceleration method is displayed in the interface, showing which provider is being used, GPU information when available, and the reason for any fallbacks.
 
