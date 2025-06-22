@@ -144,3 +144,36 @@ O el siguiente en windows
 
 y cada X minutos pare el proceso y lo ejecute nuevamente. Hasta que la ejecucion del script tarde menos de X minutos.
 X es 10 por defecto, el archivo se tiene que llamar synthetic_dataset_anti_leak.py
+
+
+## 05 - random backgrounds
+
+
+Generar un script que 
+
+- descarge 2000 imagenes aleatorias para el dataset de entrenamiento dataset/train
+- descargar 500 imagenes aleatorias para el dataset de testeo dataset/test
+- Utilizar Lorem Picsum para obtener las imagenes
+- La resolucion de la imagen tiene que ser 640 vertical 480 horizontal, la imagen esta en orientacion Portrait 
+- la imagen se guarda 
+  - dataset/train/images/ para las imagenes de entrenamiento
+  - dataset/test/images/ para las imagenes de testeo
+- El nombre de archivo descargado tiene que ser 
+  - prefijo lorem_picsum
+  - nombre es igual al ID numerico de la imagen
+  - extencion jpg
+- Cada ves que se descarga una imagen, generar un png completamente negro en 
+  - dataset/train/masks/ para las imagenes de entrenamiento
+  - dataset/test/masks/ para las imagenes de testeo
+- El nombre del png generado tiene que ser
+  - prefijo lorem_picsum
+  - nombre es igual al ID numerico de la imagen descargada
+  - extencion png
+- el archivo tiene llamarse dataset_generator/04_random_background_downloader.py
+
+
+'''
+modificar el script dataset_generator/04_random_background_downloader.py para que
+- Al iniciar el script, validar cuantas imagenes ya estan descargadas y restarlas del total a descargar.
+- El criterio es prefijo lorem_picsum
+'''
