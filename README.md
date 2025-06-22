@@ -34,8 +34,8 @@ Others:
 
 - 16 gb of ram or more (recomended)
 - 10 GB of hard disk space (or more)
-- A cuda 12 capable GPU (Nvidia) (others may be can be used, not tested)
-- A working pytorch enviroment (google it)
+- A cuda 12 capable GPU (Nvidia) (others can be used, not tested)
+- A working pytorch environment with GPU acceleration (google it)
 - Ubuntu 24.04 is recomended
 
 ## Step 1 - MTG Cards Syntetic Dataset Generator (`dataset_generator/`)

@@ -28,6 +28,11 @@ Generar los scripts para entrenar Semantic Segmentation, tomar las siguientes co
 - Use Cuda for training 
 - Do not use wandb
 
+'''
+
+Agregar a los script en train/ la opcion de usar una aquitectura Lite R-ASPP con un backbone mobilenet_v3_small.
+
+'''
 
 # Webapp
 
