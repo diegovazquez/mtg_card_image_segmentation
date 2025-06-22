@@ -41,7 +41,7 @@ class ModelInference {
             console.log('Initializing ONNX Runtime with GPU acceleration...');
             
             // Configure ONNX Runtime
-            ort.env.wasm.wasmPaths = 'https://cdn.jsdelivr.net/npm/onnxruntime-web@1.16.3/dist/';
+            ort.env.wasm.wasmPaths = 'https://cdn.jsdelivr.net/npm/onnxruntime-web@1.22.0/dist/';
             ort.env.wasm.numThreads = 1; // Single thread for stability
             
             // Detect GPU capabilities
@@ -160,20 +160,19 @@ class ModelInference {
     getOptimalExecutionProviders() {
         const providers = [];
         
-        // Prioritize WebGL over WebGPU for better compatibility
+        // Prioritize WebGPU first for best performance
+        if (this.accelerationInfo.supportsWebGPU) {
+            providers.push('webgpu');
+            this.accelerationInfo.availableProviders.push('webgpu');
+        }
+        
+        // Fall back to WebGL if WebGPU is not available or fails
         if (this.accelerationInfo.supportsWebGL) {
             providers.push('webgl');
             this.accelerationInfo.availableProviders.push('webgl');
         }
         
-        // Only add WebGPU if explicitly enabled and WebGL failed
-        // (WebGPU is still experimental and often fails)
-        if (this.accelerationInfo.supportsWebGPU && !this.accelerationInfo.supportsWebGL) {
-            providers.push('webgpu');
-            this.accelerationInfo.availableProviders.push('webgpu');
-        }
-        
-        // Always add WASM as fallback
+        // Always add WASM as final fallback
         providers.push('wasm');
         this.accelerationInfo.availableProviders.push('wasm');
         
