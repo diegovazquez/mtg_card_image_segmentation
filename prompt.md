@@ -30,28 +30,38 @@ Generar los scripts para entrenar Semantic Segmentation, tomar las siguientes co
 
 '''
 
-Agregar a los script en train/ la opcion de usar una aquitectura Lite R-ASPP con un backbone mobilenet_v3_small.
+En train/dataset.py get_training_transforms implementar RandomSizedCrop, PixelDropout y Erasing
 
 '''
 
 # Webapp
 
-Crear una aplicacion compatible con Huggingface Spaces
+Crear una aplicacion:
 
+
+Modificar la aplicacion para que cumpla con los siguientes requisitos
+
+- Compatible con Huggingface Spaces
 - El codigo tiene que estar en ingles
 - Usar ONNX Runtime web, el procesamiento se tiene que realizar en el navegador
+- Usar la version 1.22.0 de ONNX Runtime web
+- Instentar utilizar WebGPU, si falla, WASM
 - La aplicacion muestra una seleccion de las camaras disponibles al inicio
-- Tras seleccionar la camara, se reproduce el video de la camara en 480x640 si esta disponible, si no 640x480
-- Si la camara es horizontal, rotar la camara 90 grados a contrarreloj para simular que la camara es vertical.
 - Realiza inferencia del modelo que se encuentra en train/exported_models/card_segmentation.onnx
+- Hay un webserver (demo.py) que pone el modelo en /models/card_segmentation.onnx
 - Para mas informacion del modelo ver train/exported_models/README.md
 - El modelo es de segmentacion de imagen, en la app se tiene que mostrar la mascara celeste transparente.
 - La inferencia se tiene que realizar en el video (ciclo continuo)
-- Si la imagen de entrada al modelo es 640x480, rotar la imagen 90 grados a contrarreloj para llevarlo a 480x640
 - La app se guarda en /demo
-
-'''
-La demo en demo/ da el siguiente error en el navegador
-
-Mejorar la demo en demo/ para que ONNX Runtime web utilice la GPU si esta disponible.
-'''
+- Intentar inicializar la camara en las siguientes resoluciones, en este orden
+  - 1280x720, 640x480
+  - Si todas las resoluciones fallan, mostrar un mensaje de error
+- En la web, mostrar la camara de la siguiente forma si es tiene una horientacion Horizontal
+  - Recortar los costados para obtener una imagen en una proporcion 4:3 centrada
+- En la web, mostrar la camara de la siguiente forma si es tiene una horientacion Vertical
+  - Recortar las partes de arriba y abajo para obtener una imagen en una proporcion 4:3 centrada
+- Utilizar la misma logica de recorte antes de realizar la inferencia en el modelo
+- En la parte de abajo se muestra 
+  - El backend de ONNX (WebGPU/WASM) que se esta utilizando 
+  - La cantidad de FPS
+  - La resolucion de la camara
