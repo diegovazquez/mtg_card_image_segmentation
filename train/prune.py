@@ -7,7 +7,8 @@ import argparse
 import torch
 import torch.nn as nn
 import torch.nn.utils.prune as prune
-from torch.cuda.amp import GradScaler, autocast
+from torch.cuda.amp import GradScaler
+from torch.amp import autocast
 import copy
 
 from config import Config
@@ -153,14 +154,14 @@ def evaluate_model(model, val_loader, criterion, device):
         dict: Evaluation metrics
     """
     model.eval()
-    metrics_calc = MetricsCalculator(num_classes=Config.NUM_CLASSES)
+    metrics_calc = MetricsCalculator(num_classes=Config.NUM_CLASSES, device=device)
     
     with torch.no_grad():
         for batch in val_loader:
             images = batch['image'].to(device, non_blocking=True)
             masks = batch['mask'].to(device, non_blocking=True)
             
-            with autocast(enabled=Config.USE_AMP):
+            with autocast('cuda', enabled=Config.USE_AMP):
                 outputs = model(images)
                 loss = criterion(outputs, masks)
             

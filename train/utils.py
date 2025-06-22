@@ -198,8 +198,8 @@ class MetricsCalculator:
             targets (torch.Tensor): Ground truth masks
         """
         self.total_loss += loss.item()
-        self.total_iou += calculate_iou(predictions, targets, self.num_classes)
-        self.total_dice += calculate_dice_coefficient(predictions, targets, self.num_classes)
+        self.total_iou += calculate_iou(predictions, targets, self.num_classes).to(self.device)
+        self.total_dice += calculate_dice_coefficient(predictions, targets, self.num_classes).to(self.device)
         self.total_accuracy += calculate_pixel_accuracy(predictions, targets).item()
         self.count += 1
     
@@ -230,8 +230,8 @@ def save_checkpoint(model, optimizer, scheduler, epoch, best_metric, checkpoint_
     
     Args:
         model (nn.Module): Model to save
-        optimizer: Optimizer state
-        scheduler: Learning rate scheduler state
+        optimizer: Optimizer state (can be None)
+        scheduler: Learning rate scheduler state (can be None)
         epoch (int): Current epoch
         best_metric (float): Best validation metric achieved
         checkpoint_dir (str): Directory to save checkpoint
@@ -243,7 +243,7 @@ def save_checkpoint(model, optimizer, scheduler, epoch, best_metric, checkpoint_
     torch.save({
         'epoch': epoch,
         'model_state_dict': model.state_dict(),
-        'optimizer_state_dict': optimizer.state_dict(),
+        'optimizer_state_dict': optimizer.state_dict() if optimizer else None,
         'scheduler_state_dict': scheduler.state_dict() if scheduler else None,
         'best_metric': best_metric,
     }, checkpoint_path)

@@ -18,12 +18,12 @@ class Config:
     # Model configuration
     MODEL_NAME = 'lraspp_mobilenet_v3_large'
     NUM_CLASSES = 2  # background (0) and card (1)
-    INPUT_HEIGHT = 480
-    INPUT_WIDTH = 640
+    INPUT_HEIGHT = 320  
+    INPUT_WIDTH = 320   
     PRETRAINED = False  # Enable pretrained weights for better convergence
     
     # Training configuration
-    BATCH_SIZE = 16  # Adjust based on GPU memory
+    BATCH_SIZE = 32  # Adjust based on GPU memory
     NUM_EPOCHS = 100
     LEARNING_RATE = 1e-3
     WEIGHT_DECAY = 1e-4

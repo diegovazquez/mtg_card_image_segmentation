@@ -101,16 +101,24 @@ def get_training_transforms(target_size=(480, 640)):
         # Resize to target size
         A.Resize(height=target_size[0], width=target_size[1]),
         
+        # Random sized crop for scale and crop augmentation
+        A.RandomSizedCrop(
+            min_max_height=(int(target_size[0] * 0.7), target_size[0]),
+            height=target_size[0],
+            width=target_size[1],
+            p=0.4
+        ),
+        
         # Geometric augmentations
         A.HorizontalFlip(p=0.5),
         A.Affine(
-            translate_percent=0.1,
-            scale=(0.9, 1.1),
+            translate_percent=0.25,
+            scale=(0.9, 1.5),
             rotate=(-15, 15),
             mode=cv2.BORDER_CONSTANT,
             cval=0,
             cval_mask=0,
-            p=0.7
+            p=0.8
         ),
         
         # Elastic transform for slight deformation
@@ -153,7 +161,28 @@ def get_training_transforms(target_size=(480, 640)):
         A.OneOf([
             A.GaussNoise(variance_limit=(10, 50), p=0.5),
             A.GaussianBlur(blur_limit=(3, 7), p=0.5),
-        ], p=0.3),
+        ], p=0.5),
+        
+        # Pixel-level dropout for regularization
+        A.PixelDropoutElementwise(
+            dropout_prob=0.01,
+            per_channel=True,
+            drop_value=0,
+            p=0.2
+        ),
+        
+        # Random erasing (coarse dropout) for occlusion simulation
+        A.CoarseDropout(
+            max_holes=3,
+            max_height=int(target_size[0] * 0.15),
+            max_width=int(target_size[1] * 0.15),
+            min_holes=1,
+            min_height=int(target_size[0] * 0.05),
+            min_width=int(target_size[1] * 0.05),
+            fill_value=0,
+            mask_fill_value=0,
+            p=0.3
+        ),
         
         # Normalization and tensor conversion
         A.Normalize(

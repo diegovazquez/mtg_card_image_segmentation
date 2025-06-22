@@ -159,6 +159,7 @@ python prune.py --model-path checkpoints/best_model.pth --structured --fine-tune
 
 # Advanced pruning options
 python prune.py --model-path checkpoints/best_model.pth \
+                --structured \
                 --pruning-amount 0.5 \
                 --fine-tune \
                 --fine-tune-epochs 30 \
