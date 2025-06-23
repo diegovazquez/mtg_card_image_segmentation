@@ -2,6 +2,10 @@
 
 This project provides tools for generating Magic The Gathering Cards image segmentation machine learning model.
 
+- Pre-generated dataset (step 1) in [this](https://huggingface.co/datasets/dhvazquez/mtg_synthetic_cards_semantic_segmentation) 
+- Trained model (step 2) in this [link](https://huggingface.co/dhvazquez/mtg_semantic_segmentation)
+- Demo (step 3) in this [link](https://huggingface.co/spaces/dhvazquez/mtg_semantic_segmentation)
+
 # Glossary
 
 - **Magic The Gatering** Good card game for the cool people!
@@ -19,16 +23,9 @@ This project provides tools for generating Magic The Gathering Cards image segme
 # The Plan
 
 - [x] Create MTG Cards Syntetic Dataset Generator based on 3d redering, and generate the first version of this dataset. 
-
 - [x] Create the machine learning training scrips and train the model
-
 - [X] Transform to ONNX
-
 - [X] Crate a web example for runing the model in web
-
-Others: 
-
-- [ ] Expand the dataset with a generative network like flux or Stable diffusion
 
 # Hardware/Software Requirements
 
