@@ -10,8 +10,8 @@ class ModelInference {
         this.modelPath = 'models/card_segmentation.onnx';
         
         // Model specifications
-        this.inputHeight = 480;
-        this.inputWidth = 640;
+        this.inputHeight = 320;
+        this.inputWidth = 240;
         this.numClasses = 2;
         
         // GPU acceleration info
