@@ -65,3 +65,6 @@ Modificar la aplicacion para que cumpla con los siguientes requisitos
   - El backend de ONNX (WebGPU/WASM) que se esta utilizando 
   - La cantidad de FPS
   - La resolucion de la camara
+
+
+Generar una imagen SVG, de 640 de alto por 480 de ancho (portraid), en el medio de la imgen, con un borde del 20% en cada lado, generar un rectangulo fino de esquinas redondeadas, el rectangulo tiene una proporcion de 5:7, la parte exterior del rectangulo tiene un griz con un 80% de transparencia. El rectangulo del centro tiene que ser completamente transparente.

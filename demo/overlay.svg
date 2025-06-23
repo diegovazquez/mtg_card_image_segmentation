@@ -1,0 +1,15 @@
+<svg width="480" height="640" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Máscara para crear el agujero transparente -->
+    <mask id="frameMask">
+      <rect width="480" height="640" fill="white"/>
+      <rect x="102.86" y="128" width="274.29" height="384" 
+            rx="15" ry="15" fill="black"/>
+    </mask>
+  </defs>
+  
+  <!-- Área exterior con gris 80% transparente, aplicando la máscara -->
+  <rect width="480" height="640" 
+        fill="rgba(128, 128, 128, 0.5)" 
+        mask="url(#frameMask)"/>
+</svg>
