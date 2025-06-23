@@ -100,10 +100,14 @@ Note: In Windows, if blenderproc is not in your path, you can try (examples):
 
 ## Step 2 - Train  (`train/`)
 
+**NOTE:** You cand download the trained model form this [link](https://huggingface.co/dhvazquez/mtg_semantic_segmentation).
+
 Please read this documentation [link](train/README.md).
 
 
 ## Step 3 - Demo  (`demo/`)
+
+**NOTE:** You cand access this demo form this [link](https://huggingface.co/spaces/dhvazquez/mtg_semantic_segmentation).
 
 #### Quick Start:
 
@@ -118,7 +122,7 @@ INFO:     Uvicorn running on http://0.0.0.0:5000 (Press CTRL+C to quit)
 
 Go to http://127.0.0.1:5000/ in you browser.
 
-Note: You need the exported model in train/exported_models/card_segmentation.onnx
+Note: You need the exported model in train/exported_models/card_segmentation.onnx (see step 2)
 
 # Developer Notes
 
