@@ -98,16 +98,16 @@ def get_training_transforms(target_size=(480, 640)):
         albumentations.Compose: Composed transforms
     """
     return A.Compose([
-        # Resize to target size
-        A.Resize(height=target_size[0], width=target_size[1]),
-        
         # Random sized crop for scale and crop augmentation
-        A.RandomSizedCrop(
-            min_max_height=(int(target_size[0] * 0.7), target_size[0]),
-            height=target_size[0],
-            width=target_size[1],
-            p=0.4
-        ),
+        #A.RandomResizedCrop(
+        #    size=(int(target_size[0] * 0.7), int(target_size[1] * 0.7)),
+        #    scale=(0.5, 0.9),  # Crop size will be 50-90% of original image
+        #    ratio=(0.75, 0.75),  # Aspect ratio will vary from 3:4 to 4:3
+        #    interpolation=cv2.INTER_LINEAR,
+        #    mask_interpolation=cv2.INTER_NEAREST,
+        #    area_for_downscale="image",  # Use INTER_AREA for image downscaling
+        #    p=0.4
+        #),
         
         # Geometric augmentations
         A.HorizontalFlip(p=0.5),
@@ -163,27 +163,22 @@ def get_training_transforms(target_size=(480, 640)):
             A.GaussianBlur(blur_limit=(3, 7), p=0.5),
         ], p=0.5),
         
-        # Pixel-level dropout for regularization
-        A.PixelDropoutElementwise(
-            dropout_prob=0.01,
-            per_channel=True,
-            drop_value=0,
-            p=0.2
-        ),
-        
         # Random erasing (coarse dropout) for occlusion simulation
-        A.CoarseDropout(
-            max_holes=3,
-            max_height=int(target_size[0] * 0.15),
-            max_width=int(target_size[1] * 0.15),
-            min_holes=1,
-            min_height=int(target_size[0] * 0.05),
-            min_width=int(target_size[1] * 0.05),
-            fill_value=0,
-            mask_fill_value=0,
-            p=0.3
-        ),
-        
+        #A.CoarseDropout(
+        #    max_holes=3,
+        #    max_height=int(target_size[0] * 0.15),
+        #    max_width=int(target_size[1] * 0.15),
+        #    min_holes=1,
+        #    min_height=int(target_size[0] * 0.05),
+        #    min_width=int(target_size[1] * 0.05),
+        #    fill_value=0,
+        #    mask_fill_value=0,
+        #    p=0.3
+        #),
+
+        # Resize to target size
+        A.Resize(height=target_size[0], width=target_size[1]),
+
         # Normalization and tensor conversion
         A.Normalize(
             mean=[0.485, 0.456, 0.406],

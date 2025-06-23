@@ -19,7 +19,7 @@ class Config:
     MODEL_NAME = 'lraspp_mobilenet_v3_large'
     NUM_CLASSES = 2  # background (0) and card (1)
     INPUT_HEIGHT = 320  
-    INPUT_WIDTH = 320   
+    INPUT_WIDTH = 240   
     PRETRAINED = False  # Enable pretrained weights for better convergence
     
     # Training configuration

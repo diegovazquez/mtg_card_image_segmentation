@@ -316,7 +316,7 @@ class ModelExporter:
 
 ## Model Details
 - Architecture: {Config.MODEL_NAME}
-- Input Size: {Config.INPUT_HEIGHT}x{Config.INPUT_WIDTH}
+- Input Size: {Config.INPUT_HEIGHT}x{Config.INPUT_WIDTH} (Height x Width)
 - Number of Classes: {Config.NUM_CLASSES}
 - Classes: Background (0), Card (1)
 
