@@ -9,8 +9,8 @@ class CameraManager {
         this.selectedCameraId = null;
         this.videoElement = null;
         this.preferredConstraints = {
-            width: { ideal: 480, min: 320 },
-            height: { ideal: 640, min: 240 }
+            width: { ideal: 480, min: 240 },
+            height: { ideal: 640, min: 320 }
         };
         this.fallbackConstraints = {
             width: { ideal: 640, min: 320 },
@@ -163,7 +163,12 @@ class CameraManager {
             console.log(`Video stream started: ${videoWidth}x${videoHeight}`);
 
             // Determine if camera should be rotated for display
-            const shouldRotateDisplay = ImageUtils.shouldRotateCamera(videoWidth, videoHeight);
+            //const shouldRotateDisplay = ImageUtils.shouldRotateCamera(videoWidth, videoHeight);
+            const shouldRotateDisplay = false;
+            const isPortrait = videoHeight > videoWidth;
+            
+            // Get video wrapper for aspect ratio handling
+            const videoWrapper = videoElement.closest('.video-wrapper');
             
             // Apply rotation CSS if needed
             if (shouldRotateDisplay) {
@@ -171,6 +176,16 @@ class CameraManager {
                 console.log('Applied 90° CCW rotation to video display');
             } else {
                 videoElement.classList.remove('rotate-90ccw');
+            }
+            
+            // Apply portrait aspect ratio if video is vertical
+            if (videoWrapper) {
+                if (isPortrait) {
+                    videoWrapper.classList.add('portrait');
+                    console.log('Applied portrait aspect ratio (3:4)');
+                } else {
+                    videoWrapper.classList.remove('portrait');
+                }
             }
 
             return {
@@ -203,6 +218,12 @@ class CameraManager {
         if (this.videoElement) {
             this.videoElement.srcObject = null;
             this.videoElement.classList.remove('rotate-90ccw');
+            
+            // Remove portrait class from wrapper
+            const videoWrapper = this.videoElement.closest('.video-wrapper');
+            if (videoWrapper) {
+                videoWrapper.classList.remove('portrait');
+            }
         }
 
         console.log('Camera stopped');

@@ -121,10 +121,14 @@ class ImageUtils {
             // Extract frame from video
             let imageData = this.getVideoFrame(video);
             
+            //console.log("In", imageData.width, imageData.height);
+            imageData = this.cropCenter3to4(imageData);
+            console.log("Out",imageData.width, imageData.height, shouldRotate);
+
             // Rotate if needed (for 640x480 -> 480x640)
-            if (shouldRotate) {
-                imageData = this.rotateImage90CCW(imageData);
-            }
+            //if (shouldRotate) {
+            //    imageData = this.rotateImage90CCW(imageData);
+            //}
             
             // Resize to target dimensions
             if (imageData.width !== targetWidth || imageData.height !== targetHeight) {
@@ -210,6 +214,7 @@ class ImageUtils {
         // Clear target canvas
         ctx.clearRect(0, 0, targetCanvas.width, targetCanvas.height);
         
+        shouldRotate = false;
         // Draw mask with rotation if needed
         if (shouldRotate) {
             ctx.save();
@@ -240,6 +245,52 @@ class ImageUtils {
      */
     static shouldRotateForModel(width, height) {
         return width === 640 && height === 480;
+    }
+
+    /**
+     * Crop the center of an image to 3:4 aspect ratio (width:height)
+     * Returns the largest possible crop that maintains the 3:4 proportion
+     * @param {ImageData} imageData 
+     * @returns {ImageData}
+     */
+    static cropCenter3to4(imageData) {
+        const { width, height } = imageData;
+        
+        // Calculate the largest possible 3:4 crop
+        let cropWidth, cropHeight;
+        
+        // Determine crop dimensions based on original aspect ratio
+        if (width / height > 3 / 4) {
+            // Image is wider than 3:4, crop width
+            cropHeight = height;
+            cropWidth = Math.floor(height * 3 / 4);
+        } else {
+            // Image is taller than 3:4, crop height
+            cropWidth = width;
+            cropHeight = Math.floor(width * 4 / 3);
+        }
+        
+        // Calculate crop position (center the crop)
+        const startX = Math.floor((width - cropWidth) / 2);
+        const startY = Math.floor((height - cropHeight) / 2);
+        
+        // Create source canvas
+        const sourceCanvas = this.createCanvas(width, height);
+        const sourceCtx = sourceCanvas.getContext('2d');
+        sourceCtx.putImageData(imageData, 0, 0);
+        
+        // Create target canvas for cropped image
+        const targetCanvas = this.createCanvas(cropWidth, cropHeight);
+        const targetCtx = targetCanvas.getContext('2d');
+        
+        // Draw the cropped portion
+        targetCtx.drawImage(
+            sourceCanvas, 
+            startX, startY, cropWidth, cropHeight,  // Source rectangle
+            0, 0, cropWidth, cropHeight             // Destination rectangle
+        );
+        
+        return targetCtx.getImageData(0, 0, cropWidth, cropHeight);
     }
 }
 

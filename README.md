@@ -124,6 +124,9 @@ Go to http://127.0.0.1:5000/ in you browser.
 
 Note: You need the exported model in train/exported_models/card_segmentation.onnx (see step 2)
 
+![App](docs/webapp_small.png)
+
+
 # Developer Notes
 
 This tools where created using: 

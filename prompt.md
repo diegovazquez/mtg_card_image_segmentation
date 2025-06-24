@@ -68,3 +68,7 @@ Modificar la aplicacion para que cumpla con los siguientes requisitos
 
 
 Generar una imagen SVG, de 640 de alto por 480 de ancho (portraid), en el medio de la imgen, con un borde del 20% en cada lado, generar un rectangulo fino de esquinas redondeadas, el rectangulo tiene una proporcion de 5:7, la parte exterior del rectangulo tiene un griz con un 80% de transparencia. El rectangulo del centro tiene que ser completamente transparente.
+
+
+
+Agregar una funcion a la clase ImageUtils en el archivo image-utils.js que recorte el centro del video en una proporcion 3:4, el recorte tiene que ser lo mas grande posible.

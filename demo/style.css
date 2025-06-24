@@ -146,12 +146,43 @@ main {
     overflow: hidden;
     box-shadow: 0 5px 20px rgba(0,0,0,0.2);
     margin-bottom: 20px;
+    /* --- */
+    aspect-ratio: 3/4;
+    max-width: 400px;
+    margin: 0 auto;
 }
 
 #videoElement {
     display: block;
+    /*
     max-width: 100%;
-    height: auto;
+    height: auto; 
+    height: 100%;
+    */
+    display: block;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+    height: 100%;
+}
+
+.video-wrapper.portrait #videoElement {
+    transform: translateX(0%);
+    left: 0%;
+    position: absolute;
+}
+
+/* Portrait video aspect ratio */
+.video-wrapper.portrait {
+    aspect-ratio: 3/4;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.video-wrapper.portrait #videoElement {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 #overlayCanvas {
@@ -171,7 +202,7 @@ main {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    background: url('overlay.svg');
+    background: no-repeat center/100% url('overlay.svg');
 }
 
 /* Controls */
@@ -256,29 +287,90 @@ footer {
 /* Responsive design */
 @media (max-width: 768px) {
     .container {
-        padding: 15px;
+        padding: 10px;
     }
     
     header h1 {
-        font-size: 2rem;
+        font-size: 1.8rem;
+    }
+    
+    header p {
+        font-size: 1rem;
     }
     
     main {
-        padding: 20px;
+        padding: 15px;
+        border-radius: 10px;
     }
+    
+    .video-wrapper {
+        max-width: 100%;
+        width: 100%;
+    }
+    
+    .video-wrapper.portrait {
+        max-width: 300px;
+        aspect-ratio: 3/4;
+    }
+    /*
+    #videoElement {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+    }*/
     
     .controls {
         flex-direction: column;
+        gap: 12px;
     }
     
     .info {
         justify-content: center;
         text-align: center;
+        gap: 10px;
+    }
+    
+    .info span {
+        font-size: 12px;
+        padding: 4px 8px;
     }
     
     .btn {
         width: 100%;
-        max-width: 200px;
+        max-width: 280px;
+        padding: 14px 20px;
+        font-size: 16px;
+        min-height: 48px;
+    }
+    
+    .camera-dropdown {
+        width: 100%;
+        padding: 14px 15px;
+        font-size: 16px;
+        min-height: 48px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 8px;
+    }
+    
+    header h1 {
+        font-size: 1.5rem;
+    }
+    
+    main {
+        padding: 12px;
+    }
+    
+    .info {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .info span {
+        font-size: 11px;
     }
 }
 
