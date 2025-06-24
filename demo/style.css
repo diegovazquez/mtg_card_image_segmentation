@@ -285,7 +285,7 @@ footer {
 }
 
 /* Responsive design */
-@media (max-width: 768px) {
+/* @media (max-width: 768px) { */
     .container {
         padding: 10px;
     }
@@ -349,7 +349,7 @@ footer {
         font-size: 16px;
         min-height: 48px;
     }
-}
+/*} */
 
 @media (max-width: 480px) {
     .container {
