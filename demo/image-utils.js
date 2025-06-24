@@ -123,8 +123,7 @@ class ImageUtils {
             
             //console.log("In", imageData.width, imageData.height);
             imageData = this.cropCenter3to4(imageData);
-            console.log("Out",imageData.width, imageData.height, shouldRotate);
-
+            
             // Rotate if needed (for 640x480 -> 480x640)
             //if (shouldRotate) {
             //    imageData = this.rotateImage90CCW(imageData);
