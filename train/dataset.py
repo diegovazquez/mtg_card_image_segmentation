@@ -113,11 +113,8 @@ def get_training_transforms(target_size=(480, 640)):
         A.HorizontalFlip(p=0.5),
         A.Affine(
             translate_percent=0.25,
-            scale=(0.9, 1.5),
+            scale=(0.9, 2),
             rotate=(-15, 15),
-            mode=cv2.BORDER_CONSTANT,
-            cval=0,
-            cval_mask=0,
             p=0.8
         ),
         
@@ -126,8 +123,6 @@ def get_training_transforms(target_size=(480, 640)):
             alpha=50,
             sigma=5,
             border_mode=cv2.BORDER_CONSTANT,
-            value=0,
-            mask_value=0,
             p=0.3
         ),
         
@@ -136,8 +131,6 @@ def get_training_transforms(target_size=(480, 640)):
             num_steps=5,
             distort_limit=0.1,
             border_mode=cv2.BORDER_CONSTANT,
-            value=0,
-            mask_value=0,
             p=0.3
         ),
         
@@ -159,7 +152,13 @@ def get_training_transforms(target_size=(480, 640)):
         
         # Noise and blur
         A.OneOf([
-            A.GaussNoise(variance_limit=(10, 50), p=0.5),
+            A.GaussNoise(
+                std_range=[0.1, 0.2], 
+                mean_range=[0, 0],
+                per_channel=True,
+                noise_scale_factor=1, 
+                p=0.5
+            ),
             A.GaussianBlur(blur_limit=(3, 7), p=0.5),
         ], p=0.5),
         
