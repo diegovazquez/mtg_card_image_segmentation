@@ -58,6 +58,7 @@ pip install tqdm wandb
 
 # Optional (for export functionality)
 pip install onnx onnxruntime onnxoptimizer
+pip install onnxconverter-common
 
 # Create dirs
 mkdir train/checkpoints
@@ -209,6 +210,9 @@ python export.py --model-path checkpoints/best_model.pth \
                  --export-onnx \
                  --export-torchscript \
                  --dynamic-batch
+
+# Export to FP16
+python onnx_fp16_converter.py exported_models/card_segmentation.onnx -o exported_models/card_segmentation_fp16.onnx
 ```
 
 ### Export Formats
