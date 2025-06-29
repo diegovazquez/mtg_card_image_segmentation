@@ -1,0 +1,31 @@
+{
+  "name": "demo",
+  "version": "1.0.0",
+  "description": "---\r title: Card Segmentation\r emoji: 🎴\r colorFrom: blue\r colorTo: purple\r sdk: static\r pinned: false\r license: mit\r ---",
+  "main": "index.js",
+  "scripts": {
+    "build": "rollup -c",
+    "build:watch": "rollup -c -w",
+    "build:prod": "NODE_ENV=production rollup -c",
+    "clean": "rm -rf dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@babel/core": "^7.27.7",
+    "@babel/preset-env": "^7.27.2",
+    "@rollup/plugin-babel": "^6.0.4",
+    "@rollup/plugin-commonjs": "^28.0.6",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rollup/plugin-terser": "^0.4.4",
+    "rollup": "^4.44.0",
+    "rollup-plugin-copy": "^3.5.0",
+    "rollup-plugin-gzip": "^4.1.1"
+  },
+  "dependencies": {
+    "core-js": "^3.43.0"
+  }
+}

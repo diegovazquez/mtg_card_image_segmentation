@@ -69,6 +69,43 @@ Modificar la aplicacion para que cumpla con los siguientes requisitos
 
 Generar una imagen SVG, de 640 de alto por 480 de ancho (portraid), en el medio de la imgen, con un borde del 20% en cada lado, generar un rectangulo fino de esquinas redondeadas, el rectangulo tiene una proporcion de 5:7, la parte exterior del rectangulo tiene un griz con un 80% de transparencia. El rectangulo del centro tiene que ser completamente transparente.
 
-
-
 Agregar una funcion a la clase ImageUtils en el archivo image-utils.js que recorte el centro del video en una proporcion 3:4, el recorte tiene que ser lo mas grande posible.
+
+
+# Train Script -- Pose estimation
+
+- Aplicar Aumentación de datos al dataset, tiene que incluir las siguientes:
+  - Zoom In desde un 0 a un 50% de la imagen centrado
+  - Blur suave y blur de movimiento
+  - Mover la imagen vertical o horizontalmente hasta un 25% de la misma
+  - Simular diferentes ISO noise
+  - Sumar augmentaciones adicionales
+- Usar augmentations para las aumentaciones
+- Generar un script para generar 10 ejemplos de la augmentacion de datos
+  - La precision del modelo tiene que ser FP16
+
+Generar los scripts para entrenar el modelo:
+
+- Informacion adicional del dataset
+  - En el directorio /train/images estan las imagenes de entrenamiento 
+  - En el directorio /test/images estan las imagenes de test (validacion de entrenamiento)
+  - Las imagenes estan en formato jpg
+  - Las imagenes son de 480 (ancho) por 640 (alto) (Portraid)
+  - El dataset se encuentra en el directorio dataset
+  - La informacion sobre las 4 esquinas se encuentra en el archivo corner_annotations.json
+- Sobre el modelo:
+  - Usar yolo12n-pose y ultralytics
+  - Resolucion de entrada 480 (ancho) por 640 (alto) (Portraid)
+  - Retornar los 4 puntos de la carta
+  - Modelo exportable a ONNX
+  - El modelo tiene que poder ejecutarse en Web
+  - El modelo tiene que poder ejecutarse en Mobile (Android/IOS)
+- El codigo tiene que estar en ingles
+- Todos los script tienen que estar en la carpeta train generar la carpeta si no existe
+- Crear la documentacion en train/README.md
+- Usar os.path.realpath() para garantizar la compatibilidad entre pataformas e interpretes
+- Usar Cuda para el entrenamiento
+- Implementar las siguientes tecnicas de entrenamiento
+  - Early Stopping 
+  - Reduce LR On Plateau 
+- Metricas de porcentual de resultados esta a menos de 20px, 10px y 5px de lo esperado 

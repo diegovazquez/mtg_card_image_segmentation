@@ -348,4 +348,4 @@ class CameraManager {
 }
 
 // Export for use in other modules
-window.CameraManager = CameraManager;
+export default CameraManager;

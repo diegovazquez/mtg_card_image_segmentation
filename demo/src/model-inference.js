@@ -2,12 +2,14 @@
  * Model inference module using ONNX Runtime Web
  */
 
+import ImageUtils from './image-utils.js';
+
 class ModelInference {
     constructor() {
         this.session = null;
         this.isModelLoaded = false;
         this.isInferring = false;
-        this.modelPath = 'models/card_segmentation.onnx';
+        this.modelPath = 'models/card_segmentation_fp16.onnx';
         
         // Model specifications
         this.inputHeight = 320;
@@ -469,4 +471,4 @@ class ModelInference {
 }
 
 // Export for use in other modules
-window.ModelInference = ModelInference;
+export default ModelInference;

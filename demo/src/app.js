@@ -3,6 +3,10 @@
  * Coordinates camera, model inference, and UI interactions
  */
 
+import CameraManager from './camera-manager.js';
+import ModelInference from './model-inference.js';
+import ImageUtils from './image-utils.js';
+
 class CardSegmentationApp {
     constructor() {
         // Core modules

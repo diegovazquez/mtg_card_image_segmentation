@@ -294,4 +294,4 @@ class ImageUtils {
 }
 
 // Export for use in other modules
-window.ImageUtils = ImageUtils;
+export default ImageUtils;
