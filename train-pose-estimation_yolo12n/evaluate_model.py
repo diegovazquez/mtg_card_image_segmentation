@@ -240,7 +240,7 @@ class CornerEvaluator:
             EvaluationMetrics object with all metrics
         """
         print(f"Loading model from: {model_path}")
-        model = YOLO(model_path)
+        model = YOLO(model_path, task='pose')
         
         print(f"Loading annotations from: {annotations_file}")
         annotations = self.load_annotations(annotations_file, split)

@@ -38,8 +38,8 @@ python train.py \
     --annotations ../dataset/corner_annotations.json \
     --images-dir ../dataset \
     --epochs 200 \
-    --batch-size 16 \
-    --model yolo11n-pose.pt
+    --batch-size 24 \
+    --model yolo12n-pose.yaml
     --device cuda
 ```
 
@@ -57,17 +57,9 @@ python evaluate_model.py
 ### 3. Export to ONNX
 
 ```bash
-python export_onnx_fp32.py \
-    --model runs/train/corner_detection_20250628_024721/weights/best.pt \
-    --output runs/train/corner_detection_20250628_024721/weights/best_fp32.onnx
+yolo export format=onnx model=runs/train/corner_detection_20250630_234018/weights/best.pt device=0 dynamic=True half=True
 
-python export_onnx_fp16.py \
-    --model runs/train/corner_detection_20250628_024721/weights/best.pt \
-    --output runs/train/corner_detection_20250628_024721/weights/best_fp16.onnx
-
-python export_onnx_int8.py \
-    --input runs/train/corner_detection_20250628_024721/weights/best_fp32.onnx \
-    --output runs/train/corner_detection_20250628_024721/weights/best_int8.onnx
+yolo export format=onnx imgsz=480,640 model=runs/train/corner_detection_20250630_234018/weights/best.pt device=0 dynamic=True half=True
 ```
 
 ## 📊 Dataset Information

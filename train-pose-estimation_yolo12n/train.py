@@ -35,9 +35,9 @@ class TrainingConfig:
     
     def __init__(self):
         # Model configuration
-        self.model_name = "yolo11n-pose.pt"
+        self.model_name = "yolo12n-pose.yaml"
         self.num_keypoints = 4
-        self.img_size = 640
+        self.img_size = (480, 640)
         
         # Training configuration
         self.epochs = 200
@@ -63,8 +63,8 @@ class TrainingConfig:
         # Data configuration
         self.train_split = 0.8
         self.val_split = 0.2
-        self.augmentation_mode = "progressive"  # 'light', 'medium', 'heavy', 'progressive'
-        #self.augmentation_mode = "light"  # 'light', 'medium', 'heavy', 'progressive'
+        #self.augmentation_mode = "progressive"  # 'light', 'medium', 'heavy', 'progressive'
+        self.augmentation_mode = "light"  # 'light', 'medium', 'heavy', 'progressive'
 
         # Hardware configuration
         self.device = "auto"
@@ -239,7 +239,7 @@ class CornerTrainer:
             annotations_file=annotations_file,
             images_dir=images_dir,
             output_dir=yolo_output_dir,
-            image_size=(self.config.img_size, self.config.img_size)
+            image_size=self.config.img_size
         )
         
         # Create data configuration
@@ -531,7 +531,7 @@ def parse_arguments():
     # Model arguments
     parser.add_argument('--model', type=str, default='yolo11n-pose.pt',
                        help='YOLO model name or path')
-    parser.add_argument('--img-size', type=int, default=640,
+    parser.add_argument('--img-size', type=tuple, default=(480, 640),
                        help='Input image size')
     
     # Training arguments

@@ -14,7 +14,7 @@ class CornerDetectionModel:
     
     def __init__(
         self,
-        model_name: str = "yolo12n-pose.pt",
+        model_name: str = "yolo12n-pose.yaml",
         num_keypoints: int = 4,
         device: str = "auto"
     ):
@@ -115,7 +115,7 @@ class CornerDetectionModel:
         data_config: str,
         epochs: int = 100,
         batch_size: int = 16,
-        img_size: int = 640,
+        img_size: tuple = (480, 640),
         learning_rate: float = 0.01,
         weight_decay: float = 0.0005,
         save_dir: str = "runs/train",
@@ -171,7 +171,7 @@ class CornerDetectionModel:
         self,
         data_config: str,
         model_path: Optional[str] = None,
-        img_size: int = 640,
+        img_size: tuple = (480, 640),
         batch_size: int = 16,
         **kwargs
     ) -> Dict[str, Any]:
@@ -216,7 +216,7 @@ class CornerDetectionModel:
         self,
         source: str,
         model_path: Optional[str] = None,
-        img_size: int = 640,
+        img_size: tuple = (480, 640),
         conf_threshold: float = 0.25,
         save_results: bool = True,
         **kwargs
@@ -267,7 +267,7 @@ class CornerDetectionModel:
         self,
         model_path: str,
         output_path: str,
-        img_size: int = 640,
+        img_size: tuple = (480, 640),
         dynamic: bool = True,
         half: bool = False,
         **kwargs
