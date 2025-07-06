@@ -20,3 +20,5 @@ train-pose-estimation_yolo12n/yolo11s-pose.pt
 train-pose-estimation_yolo12n/yolo11s.pt
 demo/node_modules
 demo/models
+train-pose-estimation_custom/__pycache__
+train-pose-estimation_custom/outputs
